@@ -2,9 +2,6 @@ import React, { Component } from 'react';
 import './App.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Tabs, Tab} from 'material-ui/Tabs';
-import RaisedButton from 'material-ui/RaisedButton';
-import {List, ListItem} from 'material-ui/List';
-import Divider from 'material-ui/Divider';
 import SwipeableViews from 'react-swipeable-views';
 import LyricGetComponent from './LyricGetComponent';
 
@@ -19,22 +16,6 @@ const styles = {
     padding: 10,
   },
 };
-
-const ListExampleSimple = () => (
-  <div>
-  <List>
-    <ListItem primaryText="no" />
-    <ListItem primaryText="way" />
-    <ListItem primaryText="to" />
-    <ListItem primaryText="shine" />
-  </List>
-  <Divider />
-  <List>
-    <ListItem primaryText="hello" />
-    <ListItem primaryText="world" />
-  </List>
-  </div>
-);
 
 class App extends Component {
   constructor(props) {

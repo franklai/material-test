@@ -13,14 +13,25 @@ class LyricGetComponent extends React.Component {
         super(props);
 
         this.state = {
-            result: ''
+            result: '',
+            url: 'http://www.kasi-time.com/item-262.html'
         };
     }
 
-    async handleUrl() {
-        console.log('cc');
-        // https://franklai-lyric-get.appspot.com/app?url=http%3A%2F%2Fwww.utamap.com%2Fshowkasi.php%3Fsurl%3D70380
-        const url = 'https://franklai-lyric-get.appspot.com/app?url=http%3A%2F%2Fwww.utamap.com%2Fshowkasi.php%3Fsurl%3D70380';
+    handleUrlChange(e) {
+        const url = e.target.value;
+
+        if (!url) {
+            return;
+        }
+
+        this.setState({
+            url: url
+        });
+    }
+
+    async handleButtonClick() {
+        const url = 'https://franklai-lyric-get.appspot.com/app?url=' + encodeURIComponent(this.state.url);
         let json;
         try {
             const response = await fetch(url);
@@ -32,15 +43,15 @@ class LyricGetComponent extends React.Component {
         console.log('json:', json);
 
         this.setState({
-            result: 'cc'
+            result: json.lyric
         });
     }
 
     render() {
         return (
             <div style={divStyle}>
-            <TextField name="url" hintText="Paste URL HERE..." fullWidth ></TextField>
-            <RaisedButton label="Get" fullWidth onClick={(e) => this.handleUrl(e)}/>
+            <TextField name="url" hintText="Paste URL HERE..." fullWidth onChange={(e) => this.handleUrlChange(e)}></TextField>
+            <RaisedButton label="Get" fullWidth onClick={(e) => this.handleButtonClick(e)}/>
             <Divider />
             <TextField name="result" multiLine fullWidth value={this.state.result} />
             </div>

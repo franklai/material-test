@@ -4,6 +4,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import LyricGetComponent from './LyricGetComponent';
+import ExamplesComponent from './ExamplesComponent';
 
 const styles = {
   headline: {
@@ -26,7 +27,7 @@ class App extends Component {
   }
 
   handleChange = (value) => {
-    console.log('no way to shine');
+    console.log('no way to shine', value);
     this.setState({
       slideIndex: value,
     });
@@ -49,7 +50,7 @@ class App extends Component {
             onChangeIndex={this.handleChange}
           >
             <div><LyricGetComponent/></div>
-            <div style={styles.slide}>2</div>
+            <div style={styles.slide}><ExamplesComponent/></div>
             <div style={styles.slide}>3</div>
           </SwipeableViews>
           </div>

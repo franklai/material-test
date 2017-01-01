@@ -1,6 +1,7 @@
 {
   "name": "material-test",
   "version": "0.1.0",
+  "homepage": "https://franklai-lyric-get.appspot.com/react/",
   "private": true,
   "devDependencies": {
     "react-scripts": "0.8.4"

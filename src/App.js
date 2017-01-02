@@ -33,6 +33,14 @@ class App extends Component {
     });
   };
 
+  setUrl = (url) => {
+    console.log('in setUrl:', url);
+
+    this.setState({
+      slideIndex: 0,
+    })
+  };
+
   render() {
     return (
         <MuiThemeProvider>
@@ -50,7 +58,7 @@ class App extends Component {
             onChangeIndex={this.handleChange}
           >
             <div><LyricGetComponent/></div>
-            <div style={styles.slide}><ExamplesComponent/></div>
+            <div style={styles.slide}><ExamplesComponent setUrl={this.setUrl}/></div>
             <div style={styles.slide}>3</div>
           </SwipeableViews>
           </div>

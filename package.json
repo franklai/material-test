@@ -4,7 +4,8 @@
   "homepage": "https://franklai-lyric-get.appspot.com/react/",
   "private": true,
   "devDependencies": {
-    "react-scripts": "0.8.4"
+    "react-scripts": "0.8.4",
+    "redux-devtools": "^3.3.1"
   },
   "dependencies": {
     "material-ui": "^0.16.5",

@@ -32,6 +32,7 @@ class App extends Component {
     super(props);
     this.state = {
       slideIndex: 0,
+      loading_status: 'loading',
       url: '',
       result: ''
     };
@@ -43,19 +44,30 @@ class App extends Component {
     });
   };
 
-  setUrl(url) {
+  setUrl(url, do_req) {
     this.setState({
       slideIndex: 0,
       url: url,
     })
   };
 
-  async doRequest() {
-    this.setState({
-        result: ''
-    });
+  async doRequest(lyric_url) {
+    const req_url = lyric_url || this.state.url;
 
-    const url = 'https://franklai-lyric-get.appspot.com/app?url=' + encodeURIComponent(this.state.url);
+    this.setState({
+        result: '',
+        loading_status: 'loading',
+    });
+    if (window.scrollTo) {
+      window.scrollTo(0, 0);
+    }
+
+    if (!req_url) {
+      console.log('no url');
+      return;
+    }
+
+    const url = 'https://franklai-lyric-get.appspot.com/app?url=' + encodeURIComponent(req_url);
     let json;
     try {
         const response = await fetch(url);
@@ -65,7 +77,8 @@ class App extends Component {
     }
 
     this.setState({
-        result: json.lyric
+        result: json.lyric,
+        loading_status: 'hide',
     });
   }
 
@@ -87,7 +100,9 @@ class App extends Component {
           >
             <div>
               <LyricGetComponent
-                url={this.state.url} result={this.state.result}
+                loadingStatus={this.state.loading_status}
+                url={this.state.url}
+                result={this.state.result}
                 setUrl={this.setUrl.bind(this)}
                 doRequest={this.doRequest.bind(this)}
               />

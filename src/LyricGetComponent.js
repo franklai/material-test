@@ -2,6 +2,7 @@ import React from 'react';
 import Divider from 'material-ui/Divider';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import RefreshIndicator from 'material-ui/RefreshIndicator';
 
 const divStyle = {
     width: '90%',
@@ -11,12 +12,6 @@ const divStyle = {
 class LyricGetComponent extends React.Component {
     handleUrlChange(e) {
         const url = e.target.value;
-
-        console.log('url in text field');
-
-        if (!url) {
-            return;
-        }
 
         this.props.setUrl(url);
     }
@@ -38,6 +33,11 @@ class LyricGetComponent extends React.Component {
             <RaisedButton label="Get" fullWidth onClick={(e) => this.handleButtonClick(e)}/>
             <Divider />
             <TextField name="result" multiLine fullWidth value={this.props.result} />
+            <RefreshIndicator
+                top={160}
+                left={80}
+                status={this.props.loadingStatus}
+            />
             </div>
         );
     }

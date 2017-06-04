@@ -36,7 +36,7 @@ class LinkList extends React.Component {
         e.preventDefault();
         
         this.props.setUrl(url);
-        this.props.doRequest();
+        this.props.doRequest(url)
 
         return false;
     }

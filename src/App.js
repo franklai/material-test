@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import './App.css';
+import {indigo500, amber500} from 'material-ui/styles/colors';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import {Tabs, Tab} from 'material-ui/Tabs';
 import SwipeableViews from 'react-swipeable-views';
 import LyricGetComponent from './LyricGetComponent';
@@ -17,6 +19,13 @@ const styles = {
     padding: 10,
   },
 };
+
+const muiTheme = getMuiTheme({
+  palette: {
+    primary1Color: indigo500,
+    accent1Color: amber500,
+  }
+})
 
 class App extends Component {
   constructor(props) {
@@ -43,7 +52,7 @@ class App extends Component {
 
   render() {
     return (
-        <MuiThemeProvider>
+        <MuiThemeProvider muiTheme={muiTheme}>
           <div>
           <Tabs
             onChange={this.handleChange}
@@ -51,7 +60,8 @@ class App extends Component {
           >
             <Tab label="Lyric Get" value={0} />
             <Tab label="Examples" value={1} />
-            <Tab label="Search" value={2} />
+          {/*  <Tab label="Search" value={2} /> */}
+
           </Tabs>
           <SwipeableViews
             index={this.state.slideIndex}

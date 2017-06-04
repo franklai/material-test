@@ -31,45 +31,73 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      slideIndex: 1,
+      slideIndex: 0,
+      url: '',
+      result: ''
     };
   }
 
-  handleChange = (value) => {
-    console.log('no way to shine', value);
+  handleTabChange(value) {
     this.setState({
       slideIndex: value,
     });
   };
 
-  setUrl = (url) => {
-    console.log('in setUrl:', url);
-
+  setUrl(url) {
     this.setState({
       slideIndex: 0,
+      url: url,
     })
   };
+
+  async doRequest() {
+    this.setState({
+        result: ''
+    });
+
+    const url = 'https://franklai-lyric-get.appspot.com/app?url=' + encodeURIComponent(this.state.url);
+    let json;
+    try {
+        const response = await fetch(url);
+        json = await response.json();
+    } catch(e) {
+        console.log('we got exception', e);
+    }
+
+    this.setState({
+        result: json.lyric
+    });
+  }
 
   render() {
     return (
         <MuiThemeProvider muiTheme={muiTheme}>
           <div>
           <Tabs
-            onChange={this.handleChange}
+            onChange={this.handleTabChange.bind(this)}
             value={this.state.slideIndex}
           >
             <Tab label="Lyric Get" value={0} />
             <Tab label="Examples" value={1} />
-          {/*  <Tab label="Search" value={2} /> */}
 
           </Tabs>
           <SwipeableViews
             index={this.state.slideIndex}
             onChangeIndex={this.handleChange}
           >
-            <div><LyricGetComponent/></div>
-            <div style={styles.slide}><ExamplesComponent setUrl={this.setUrl}/></div>
-            <div style={styles.slide}>3</div>
+            <div>
+              <LyricGetComponent
+                url={this.state.url} result={this.state.result}
+                setUrl={this.setUrl.bind(this)}
+                doRequest={this.doRequest.bind(this)}
+              />
+            </div>
+            <div style={styles.slide}>
+              <ExamplesComponent
+                setUrl={this.setUrl.bind(this)}
+                doRequest={this.doRequest.bind(this)}
+              />
+            </div>
           </SwipeableViews>
           </div>
         </MuiThemeProvider>

@@ -9,51 +9,35 @@ const divStyle = {
 };
 
 class LyricGetComponent extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            result: '',
-            url: 'http://www.kasi-time.com/item-262.html'
-        };
-    }
-
     handleUrlChange(e) {
         const url = e.target.value;
+
+        console.log('url in text field');
 
         if (!url) {
             return;
         }
 
-        this.setState({
-            url: url
-        });
+        this.props.setUrl(url);
     }
-
-    async handleButtonClick() {
-        const url = 'https://franklai-lyric-get.appspot.com/app?url=' + encodeURIComponent(this.state.url);
-        let json;
-        try {
-            const response = await fetch(url);
-            json = await response.json();
-        } catch(e) {
-            console.log('we got exception', e);
-        }
-
-        console.log('json:', json);
-
-        this.setState({
-            result: json.lyric
-        });
+    handleButtonClick(e) {
+        this.props.doRequest();
     }
 
     render() {
         return (
             <div style={divStyle}>
-            <TextField name="url" hintText="Paste URL HERE..." fullWidth onChange={(e) => this.handleUrlChange(e)}></TextField>
+            <TextField
+                value={this.props.url}
+                name="url"
+                hintText="Paste URL HERE..."
+                fullWidth
+                onChange={(e) => this.handleUrlChange(e)}
+            >
+            </TextField>
             <RaisedButton label="Get" fullWidth onClick={(e) => this.handleButtonClick(e)}/>
             <Divider />
-            <TextField name="result" multiLine fullWidth value={this.state.result} />
+            <TextField name="result" multiLine fullWidth value={this.props.result} />
             </div>
         );
     }

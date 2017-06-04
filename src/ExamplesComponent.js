@@ -31,29 +31,13 @@ const links = [
     {name: 'songtexte', url: 'http://www.songtexte.com/songtext/taylor-swift/begin-again-63a6de47.html'},
 ];
 
-
-class NewTabButton extends React.Component {
-    render() {
-        return (
-        <IconButton
-            style={this.props.style}
-            touch={true}
-            tooltip="Open in new tab"
-            tooltipPosition="top-center"
-        >
-            <ActionOpenInNew color={grey400} />
-        </IconButton>
-        );
-    }
-}
-
-
 class LinkList extends React.Component {
     handleLinkClick(e, url) {
-        const setUrl = this.props.setUrl;
-
         e.preventDefault();
-        setUrl(url);
+        
+        this.props.setUrl(url);
+        this.props.doRequest();
+
         return false;
     }
     handleNewTab(e, url) {
@@ -100,7 +84,10 @@ class ExamplesComponent extends React.Component {
     render() {
         return (
             <div style={divStyle}>
-                <LinkList links={links} setUrl={this.props.setUrl} />
+                <LinkList links={links}
+                    setUrl={this.props.setUrl}
+                    doRequest={this.props.doRequest}
+                />
             </div>
         );
     }

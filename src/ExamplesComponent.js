@@ -1,4 +1,8 @@
 import React from 'react';
+import {List, ListItem} from 'material-ui/List';
+import {grey400} from 'material-ui/styles/colors';
+import IconButton from 'material-ui/IconButton';
+import ActionOpenInNew from 'material-ui/svg-icons/action/open-in-new';
 
 const divStyle = {
     width: '90%',
@@ -27,28 +31,67 @@ const links = [
     {name: 'songtexte', url: 'http://www.songtexte.com/songtext/taylor-swift/begin-again-63a6de47.html'},
 ];
 
-class Links extends React.Component {
+
+class NewTabButton extends React.Component {
+    render() {
+        return (
+        <IconButton
+            style={this.props.style}
+            touch={true}
+            tooltip="Open in new tab"
+            tooltipPosition="top-center"
+        >
+            <ActionOpenInNew color={grey400} />
+        </IconButton>
+        );
+    }
+}
+
+
+class LinkList extends React.Component {
     handleLinkClick(e, url) {
         const setUrl = this.props.setUrl;
-        console.log('url:', url);
+
         e.preventDefault();
         setUrl(url);
         return false;
+    }
+    handleNewTab(e, url) {
+        window.open(url);
+    }
+
+    getRightButton(url) {
+        return (
+            <IconButton
+                onTouchTap={(e) => this.handleNewTab(e, url)}
+                touch={true}
+                tooltip="Open in new tab"
+                tooltipPosition="top-center"
+            >
+                <ActionOpenInNew color={grey400} />
+            </IconButton>
+        );
+    }
+
+    getListItem(name, url) {
+        return (
+            <ListItem
+                primaryText={name}
+                secondaryText={url}
+                onTouchTap={(e) => this.handleLinkClick(e, url)}
+                rightIconButton={this.getRightButton(url)}
+            />
+        )
     }
 
     render() {
         const links = this.props.links;
         return (
-            <dl>
+            <List>
             {
-                links.map(({name, url}) =>
-                    [
-                        <dt>{name}</dt>,
-                        <dd><a href={url} target="_blank" onClick={(e) => this.handleLinkClick(e, url)}>{url}</a></dd>,
-                    ]
-                )
+                links.map(({name, url}) => [ this.getListItem(name, url)] )
             }
-            </dl>
+            </List>
         );
     }
 }
@@ -57,7 +100,7 @@ class ExamplesComponent extends React.Component {
     render() {
         return (
             <div style={divStyle}>
-                <Links links={links} setUrl={this.props.setUrl} />
+                <LinkList links={links} setUrl={this.props.setUrl} />
             </div>
         );
     }
